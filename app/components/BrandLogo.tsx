@@ -27,7 +27,7 @@
           </div>
 
           <div style={{ fontWeight: 900, fontSize: 18 }}>
-            RoomTypeAI
+            RoomPersonalityAI
           </div>
         </div>
 

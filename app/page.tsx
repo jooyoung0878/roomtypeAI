@@ -488,7 +488,7 @@ export default function Page() {
   const copyHashtags = async () => {
     const tags =
       premiumReport?.share_pack?.hashtags?.join(" ") ??
-      (lang === "en" ? "#RoomTypeAI #RoomPersonality" : "#RoomTypeAI #방성격검사");
+      (lang === "en" ? "#RoomPersonalityAI #RoomPersonality" : "#RoomPersonalityAI #방성격검사");
     try {
       await navigator.clipboard.writeText(tags);
       showToast(lang === "en" ? "Hashtags copied!" : "해시태그 복사 완료!");
@@ -520,7 +520,7 @@ export default function Page() {
             >
               R
             </div>
-            <div style={{ fontWeight: 950, fontSize: 18 }}>RoomTypeAI</div>
+            <div style={{ fontWeight: 950, fontSize: 18 }}>RoomPersonalityAI</div>
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -732,7 +732,7 @@ export default function Page() {
                     archetypeId={freeRes?.archetype?.id}
                     archetypeName={freeRes?.archetype?.name ?? "My Room Archetype"}
                     oneLiner={freeRes?.archetype?.oneLiner ?? ""}
-                    hashtags={premiumReport?.share_pack?.hashtags ?? ["#RoomTypeAI", "#방성격검사"]}
+                    hashtags={premiumReport?.share_pack?.hashtags ?? ["#RoomPersonalityAI", "#방성격검사"]}
                   />
                 </div>
               </div>
@@ -778,7 +778,7 @@ export default function Page() {
         )}
 
         <footer style={{ marginTop: 22, opacity: 0.72, fontSize: 12 }}>
-          © RoomTypeAI · {lang === "en" ? "For fun only (not medical/psychological advice)." : "재미용 분석(진단 아님)"} ·{" "}
+          © RoomPersonalityAI · {lang === "en" ? "For fun only (not medical/psychological advice)." : "재미용 분석(진단 아님)"} ·{" "}
           {lang === "en" ? "Avoid sensitive info in photos." : "사진 업로드 시 민감정보가 보이지 않게 주의하세요."}
         </footer>
 

@@ -181,7 +181,7 @@ ${JSON.stringify(features, null, 2)}
   "share_pack": {
     "headline": "…",
     "subhead": "…",
-    "hashtags": ["#RoomTypeAI", "#방사진성격검사", "#…"],
+    "hashtags": ["#RoomPersonalityAI", "#방사진성격검사", "#…"],
     "brag_points": ["…", "…"]
   }
 }

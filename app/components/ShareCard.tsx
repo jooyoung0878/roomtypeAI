@@ -101,7 +101,7 @@ function Card1080({
             R
           </div>
           <div style={{ fontWeight: 950, fontSize: 20, letterSpacing: -0.2, opacity: 0.9 }}>
-            RoomTypeAI
+            RoomPersonalityAI
           </div>
         </div>
 
@@ -159,8 +159,8 @@ function Card1080({
         </div>
 
         <div style={{ marginTop: 16, display: "flex", justifyContent: "flex-start", opacity: 0.75 }}>
-          <div style={{ fontSize: 16, fontWeight: 800 }}>roomtypeai.com</div>
-          <div style={{ fontSize: 16, fontWeight: 800 }}>@RoomTypeAI</div>
+          <div style={{ fontSize: 16, fontWeight: 800 }}>RoomPersonality.com</div>
+          <div style={{ fontSize: 16, fontWeight: 800 }}>@RoomPersonalityAI</div>
         </div>
       </div>
     </div>
@@ -171,7 +171,7 @@ export default function ShareCard({
   archetypeId,
   archetypeName,
   oneLiner,
-  hashtags = ["#RoomTypeAI", "#방성격검사"],
+  hashtags = ["#RoomPersonalityAI", "#방성격검사"],
   showSaveButton = true,
 }: Props) {
   // ✅ 저장은 “숨겨진 원본(1080)”을 캡처
@@ -214,7 +214,7 @@ export default function ShareCard({
 
       const a = document.createElement("a");
       a.href = dataUrl;
-      a.download = `roomtypeai_${(archetypeId ?? "archetype").toLowerCase()}.png`;
+      a.download = `RoomPersonalityAI_${(archetypeId ?? "archetype").toLowerCase()}.png`;
       a.click();
     } finally {
       setSaving(false);
