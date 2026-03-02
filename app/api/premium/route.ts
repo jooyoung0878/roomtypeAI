@@ -9,7 +9,7 @@ import { premiumSystem, makePremiumUser } from "../../../lib/premiumPrompt";
 
 // ✅ Prisma 추가
 import { prisma } from "../../../app/lib/prisma";
-
+export const runtime = "nodejs";
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const ReqSchema = z.object({
