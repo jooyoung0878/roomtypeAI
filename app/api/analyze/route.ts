@@ -12,6 +12,7 @@ import { prisma } from "../../../app/lib/prisma";
 import crypto from "crypto";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+export const runtime = "nodejs";
 
 // ✅ Request schema는 함수 밖으로 빼는 게 깔끔/안정적
 const ReqSchema = z.object({
