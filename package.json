@@ -9,10 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.4.2",
+    "@prisma/client": "^6.19.2",
+    "@prisma/config": "^7.4.2",
     "html-to-image": "^1.11.13",
     "html2canvas": "^1.4.1",
     "next": "16.1.6",
     "openai": "^6.22.0",
+    "pg": "^8.19.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "zod": "^4.3.6"
@@ -23,6 +27,7 @@
     "@types/react-dom": "^19.2.3",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "prisma": "^6.19.2",
     "typescript": "^5"
   }
 }

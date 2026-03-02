@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Analysis {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+
+  // 요청 컨텍스트 (PII 최소화 권장)
+  ipHash        String?
+  userAgent     String?
+  lang          String   @default("ko")      // ko | en
+  mode          String   @default("free")    // free | premium
+
+  // 비용/성능 추적
+  modelVision   String?
+  modelPremium  String?
+  msVision      Int?
+  msPremium     Int?
+
+  // 입력 요약(원본 이미지 저장은 비추천)
+  inputBytes    Int?
+  imageHash     String?   // 같은 이미지 반복 업로드 방지/분석용(옵션)
+
+  // 결과 요약(조회용)
+  archetypeId   String?
+  archetypeName String?
+  oneLiner      String?
+  clutter       Float?
+  focus         Float?
+  identity      Float?
+  routine       Float?
+
+  // 재현/분석용 원본 데이터
+  features      Json?
+  scores        Json?
+
+  // ✅ 왜 이 타입이 됐는지 (가장 중요)
+  decisionTrace Json?     // 후보/점수/트리거된 규칙/가중치 등
+
+  // premium 결과(선택 저장)
+  premiumReport Json?
+
+  status        String   @default("ok")  // ok | error
+  errorMessage  String?
+
+  events        EventLog[]
+}
+
+model EventLog {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  analysisId String
+  analysis   Analysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+
+  kind       String   // vision_call | premium_call | scoring | rate_limit | error
+  data       Json?
+}

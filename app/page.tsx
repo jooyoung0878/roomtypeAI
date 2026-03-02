@@ -9,6 +9,7 @@ type Lang = "ko" | "en";
 
 type FreeResult = {
   mode: "free";
+  analysisId: string; 
   features: any;
   scores: {
     clutter: number;
@@ -461,6 +462,7 @@ export default function Page() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          analysisId: freeRes.analysisId,
           features: freeRes.features,
           scores: freeRes.scores,
           archetype: freeRes.archetype,

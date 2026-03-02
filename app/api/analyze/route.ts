@@ -8,6 +8,8 @@ import { visionSystem, visionUser } from "../../../lib/visionPrompt";
 import { buildResult, VisionFeatures } from "../../../lib/scoring";
 import { PremiumReportSchema } from "../../../lib/premiumSchema";
 import { premiumSystem, makePremiumUser } from "../../../lib/premiumPrompt";
+import { prisma } from "../../../app/lib/prisma";
+import crypto from "crypto";
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -76,10 +78,43 @@ export async function POST(req: Request) {
     // 2) Rule engine: scores + archetype
     const result = buildResult(parsed);
 
+    // 3) Save the result in DB
+    const startedAt = Date.now();
+    const ip = req.headers.get("x-forwarded-for") ?? "unknown";
+    const ipHash = crypto.createHash("sha256").update(ip).digest("hex");
+    const userAgent = req.headers.get("user-agent") ?? undefined;
+
+    const imageHash = crypto.createHash("sha256").update(dataUrl).digest("hex");
+
+    const analysisRow = await prisma.analysis.create({
+      data: {
+        ipHash,
+        userAgent,
+        lang: "ko",
+        mode: "free",
+        modelVision: "gpt-5",
+        inputBytes: Buffer.byteLength(dataUrl, "utf8"),
+        imageHash,
+
+        features: parsed as any,
+        scores: result.scores as any,
+        decisionTrace: (result as any).decisionTrace ?? null,
+
+        archetypeId: result.archetype?.id ?? null,
+        archetypeName: result.archetype?.name ?? null,
+        oneLiner: result.archetype?.oneLiner ?? null,
+        clutter: result.scores?.clutter ?? null,
+        focus: result.scores?.focus ?? null,
+        identity: result.scores?.identity ?? null,
+        routine: result.scores?.routine ?? null,
+      },
+    });
+    
     // FREE
     if (mode === "free") {
       return NextResponse.json({
         mode: "free",
+        analysisId: analysisRow.id,
         features: parsed,
         scores: result.scores,
         archetype: result.archetype,
@@ -123,6 +158,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       mode: "premium",
+      analysisId: analysisRow.id,
       features: parsed,
       scores: result.scores,
       archetype: result.archetype,
